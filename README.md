@@ -1,2 +1,5 @@
 # typedevents
-Quickly add events to your calendar
+
+**by:** *Cab*
+
+Quickly add events to your calendar!
