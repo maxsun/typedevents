@@ -21,7 +21,7 @@ function findRecurrence(s){
     s = s.replace("every year", "");
     return ["daily", s, mark]
   }
-  return [null, s, []]
+  return ["", s, []]
 }
 function findTimes(s, date1, date2){
   if (!s.includes("pm") && !s.includes("am")) {
@@ -43,10 +43,13 @@ function findTimes(s, date1, date2){
   endIndex = s.lastIndexOf(end) + 2;
 
   cut = s.substring(0, s.lastIndexOf(end));
+  //console.log(cut);
   var nums = (cut.match(/\d+\:\d+|\d+\b|\d+(?=\w)/g) || [] )
         .map(function (v) {return v;});
+  //console.log(nums);
   var toMark = (cut.match(/\d+\:\d+|\d+\b|\d+(?=\w)/g) || [] )
         .map(function (v) {return v;});
+  toMark = toMark.slice(Math.max(0, toMark.length-2), toMark.length);
   var lastTime = nums.pop();
   var firstTime = -1;
   if(nums.length !== 0){
@@ -215,6 +218,35 @@ function readString(s){
   //non-recurrence needs subject, description, location, begin, end
   var result = {subject:"", location:"", begin:"", end:"", recurrence:"", starts:[]}
   var markedWords = [];
+  var dayOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday"];
+
+  var theDate = new Date();
+  var today = dayOfWeek[theDate.getDay()];
+  var tomorrow = dayOfWeek[theDate.getDay() + 1];
+  var aftertmr = dayOfWeek[theDate.getDay() + 2];
+  var toRemove = [];
+
+  while (s.includes(" today ")){
+    s = s.replace("today", today);
+    toRemove.push(today);
+    markedWords.push("today");
+  }
+  while (s.includes(" the day after tomorrow ")){
+    s = s.replace("the day after tomorrow", aftertmr);
+    toRemove.push(aftertmr);
+    markedWords.push("the day after tomorrow");
+  }
+  while (s.includes(" tomorrow ") || s.includes(" tmr ")){
+    s = s.replace("tomorrow", tomorrow);
+    s = s.replace("tmr", tomorrow);
+    toRemove.push(tomorrow);
+    if (s.includes(" tomorrow ")){
+      markedWords.push("tomorrow");
+    }
+    else{
+      markedWords.push("tmr");
+    }
+  }
 
   s = s.toLowerCase();
   s = s.replace("noon", "12pm");
@@ -256,11 +288,35 @@ function readString(s){
   markedWords = markedWords.concat(result.location.split(" "));
   markedWords = markedWords.concat(result.subject.split(" "));
   console.log("Marked   : " + markedWords);
+
+  while (toRemove.length > 0) {
+    var remove = toRemove.pop();
+    markedWords = markedWords.splice(markedWords.indexOf(remove), 1);
+  }
+
   return [result, markedWords];
 }
 
+/*
+GREY BOX
+play frisbee at memorial glade today from 4-5:30pm
+
+TIME TESTS
+do something at somewhere next wednesday from 4-5pm
+do something at somewhere next wednesday from 11-1am
+do something at somewhere next wednesday from 11am-2am
+do something at somewhere next wednesday from 12-2pm
+
+DAY TESTS
+do something at somewhere next wednesday from 4 to next friday 5pm
+do something at somewhere next wednesday from 11 to friday 1am
+do something at somewhere next wednesday from 12 to next next wednesday 2pm
+
+RANDOM TESTS
+*/
+
 function test(){
-  var a = "cs70 midterm review at pimentel 150 thursday 4-12am";
+  var a = "play frisbee at memorial glade today from 4-5:30pm";
   a = a.toLowerCase();
   console.log("Input    : " + a);
   readString(a);
