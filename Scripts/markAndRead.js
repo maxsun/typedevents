@@ -192,20 +192,21 @@ function readString(s){
   s = times[2];
   markedWords = markedWords.concat(times[3]);
 
-
+  result.subject = finalClean(s)
   //s = cleanString(s);
 
   var location = findLocation(s);
   result.location = finalClean(location[0]);
   s = location[1];
-  console.log("Subject  : " + finalClean(s),
+  console.log("Subject  : " + result.subject,
               "Location : " + result.location,
               "Start    : " + result.begin,
               "End      : " + result.end,
               "Repeat   : " + result.recurrence);
   markedWords = markedWords.concat(result.location.split(" "));
-  markedWords = markedWords.concat(finalClean(s).split(" "));
+  markedWords = markedWords.concat(result.subject.split(" "));
   console.log("Marked   : " + markedWords);
+  return [result, markedWords];
 }
 
 function test(){
