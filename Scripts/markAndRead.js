@@ -11,7 +11,7 @@ function findRecurrence(s){
     s = s.replace("every week", "");
     return ["weekly", s, mark]
   }
-  if (s.includes("monthly") || s.includes("every monthly")){
+  if (s.includes("monthly") || s.includes("every month")){
     s = s.replace("montly", "");
     s = s.replace("every month", "");
     return ["monthly", s, mark]
