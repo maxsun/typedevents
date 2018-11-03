@@ -69,7 +69,7 @@
     */
 
     var startstring = "10:00pm Thu Nov 22 2018 12:52:33 GMT-0800 (Pacific Standard Time)";
-    var endstring = "2:00am Fri Nov 23 2018 12:52:33 GMT-0800 (Pacific Standard Time)";
+    var endstring = "10:00pm Thu Nov 22 2018 12:52:33 GMT-0800 (Pacific Standard Time)";
 
     function toDate(string){
       var spot = string.indexOf(":");
@@ -93,8 +93,15 @@
       return output;
     }
 
+    function defaultoffset(startdate, enddate, offset){
+      if(startdate.toString() == enddate.toString()){
+        startdate.setHours(enddate.getHours()+offset);
+      }
+    }
+
     var startdate = toDate(startstring);
     var enddate = toDate(endstring);
+    defaultoffset(startdate, enddate, 1);
     var input = {subject:"sg", description:"debz&daboiz", location:"Royston", start: startdate, end: enddate, recurrence: "NONE"};
 
     var cal = ics();
@@ -120,8 +127,6 @@
       cal.addEvent(input.subject, input.description, input.location, input.start.toString(), input.end.toString());    
       i++;
     }
-
-
     // You can use this for easy debugging
     makelogs = function(obj) {
       console.log('Events Array');
