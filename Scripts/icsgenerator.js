@@ -3,11 +3,13 @@
 
     function toDate(string){
       var spot = string.indexOf(":");
-      var hour = parseInt(string.substring(0,spot))%12;
+      var hour = parseInt(string.substring(0,spot));
       var minute = parseInt(string.substring(spot+1, spot+3));
       var init = string.substring(spot+6, string.length);
-      var ampm=0;
-      if(string.substring(spot+3, spot+5)=="pm"){
+      var ampm;
+      if(string.substring(spot+3, spot+5)=="am"){
+        ampm = 0;
+      } else if(string.substring(spot+3, spot+5)=="pm"){
         ampm = 1;
       } 
       hour = hour+ampm*12;
@@ -21,15 +23,9 @@
       return output;
     }
 
-    function defaultoffset(startdate, enddate){
+    function defaultoffset(startdate, enddate, offset){
       if(startdate.toString() == enddate.toString()){
-        enddate.setHours(enddate.getHours()+1);
-      }
-    }
-
-    function checkbehind(startdate, enddate){
-      if(startdate.getTime() > enddate.getTime() && (startdate.getTime()-enddate.getTime())<=86400000){
-        enddate.setDate(enddate.getDate()+1);
+        startdate.setHours(enddate.getHours()+offset);
       }
     }
 
