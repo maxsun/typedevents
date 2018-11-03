@@ -21,9 +21,9 @@ function findRecurrence(s){
     s = s.replace("every year", "");
     return ["daily", s, mark]
   }
-  return [null, s, mark]
+  return [null, s, []]
 }
-function findTimes(s){
+function findTimes(s, date1, date2){
   if (!s.includes("pm") && !s.includes("am")) {
     return;
   }
@@ -53,7 +53,53 @@ function findTimes(s){
     firstTime = nums.pop();
   }
   else{
+    //firstTime = (parseInt(lastTime.charAt(0)) - 1) + lastTime.substring(1);
     firstTime = lastTime;
+  }
+
+  if (firstTime.startsWith("12")){
+    if (start == "am"){
+      start = "pm";
+    }
+    else{
+      start = "am";
+    }
+  }
+  if (lastTime.startsWith("12")){
+    if (end == "am"){
+      start = "pm";
+    }
+    else{
+      end = "am";
+    }
+  }
+
+  if (date1 == date2 &&
+      start == end &&
+      parseInt(firstTime.replace(":", "")) > parseInt(lastTime.replace(":", ""))){
+    if (end == "am"){
+      start = "pm";
+    }
+    if (end == "pm"){
+      start = "am";
+    }
+  }
+
+  if (firstTime.startsWith("12")){
+    if (start == "am"){
+      start = "pm";
+    }
+    else{
+      start = "am";
+    }
+  }
+  if (lastTime.startsWith("12")){
+    if (end == "am"){
+      start = "pm";
+    }
+    else{
+      end = "am";
+    }
   }
 
   startIndex = cut.indexOf(firstTime);
@@ -138,22 +184,25 @@ function findSubject(s){
 
 function finalClean(s){
   while (s.includes(" to ")){
-    s = s.replace("to", "");
+    s = s.replace(" to ", " ");
   }
   while (s.includes(" from ")){
-    s = s.replace("from", "");
+    s = s.replace(" from ", " ");
   }
   while (s.includes(" until ")){
-    s = s.replace("until", "");
+    s = s.replace(" until ", " ");
   }
   while (s.includes(" at ")){
-    s = s.replace("at", "");
+    s = s.replace(" at ", " ");
   }
   while (s.includes(" in ")){
-    s = s.replace("in", "");
+    s = s.replace(" in ", " ");
   }
   while (s.includes(" on ")){
-    s = s.replace("on", "");
+    s = s.replace(" on ", " ");
+  }
+  while (s.includes(" -")){
+    s = s.replace(" -", " ");
   }
   while (s.includes("  ")){
     s = s.replace("  ", " ");
@@ -186,18 +235,19 @@ function readString(s){
   s = days[2];
   markedWords = markedWords.concat(days[3]);
 
+
   times = findTimes(s);
   result.begin = times[0] + " " + result.begin;
   result.end = times[1] + " " + result.end;
   s = times[2];
   markedWords = markedWords.concat(times[3]);
-
-  result.subject = finalClean(s)
   //s = cleanString(s);
 
   var location = findLocation(s);
   result.location = finalClean(location[0]);
   s = location[1];
+  result.subject = finalClean(s)
+
   console.log("Subject  : " + result.subject,
               "Location : " + result.location,
               "Start    : " + result.begin,
@@ -210,7 +260,7 @@ function readString(s){
 }
 
 function test(){
-  var a = "go to target next thursday at 5p.m. to 6p.m.";
+  var a = "cs70 midterm review at pimentel 150 thursday 4-12am";
   a = a.toLowerCase();
   console.log("Input    : " + a);
   readString(a);
