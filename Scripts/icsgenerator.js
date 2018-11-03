@@ -37,14 +37,15 @@
       sop = readString(s)[0];
       var startdate = toDate(sop.begin);
       var enddate = toDate(sop.end);
-      defaultoffset(startdate, enddate, 1);
+      defaultoffset(startdate, enddate);
+      checkbehind(startdate, enddate);
       var input = {subject:result.subject, description:"", location:result.location, start: startdate, end: enddate, recurrence: result.recurrence};
       var cal = ics();
       cal.addEvent(input.subject, input.description, input.location, input.start.toLocaleString(), input.end.toLocaleString());    
 
-      var terminate = 5;
+      var terminate = 1000;
       var i=0;
-      while(i<terminate && input.recurrence!="NONE"){
+      while(i<terminate && input.recurrence!=""){
         if(input.recurrence == "DAILY"){
           input.start.setDate(input.start.getDate()+1);
           input.end.setDate(input.end.getDate()+1);
