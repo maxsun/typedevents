@@ -1,5 +1,5 @@
-    var startstring = "10:00pm Thu Nov 22 2018 12:52:33 GMT-0800 (Pacific Standard Time)";
-    var endstring = "2:00am Fri Nov 23 2018 12:52:33 GMT-0800 (Pacific Standard Time)";
+    //var startstring = "10:00pm Thu Nov 22 2018 12:52:33 GMT-0800 (Pacific Standard Time)";
+    //var endstring = "10:00pm Thu Nov 22 2018 12:52:33 GMT-0800 (Pacific Standard Time)";
 
     function toDate(string){
       var spot = string.indexOf(":");
@@ -29,32 +29,33 @@
       }
     }
 
-    var startdate = toDate(startstring);
-    var enddate = toDate(endstring);
-    defaultoffset(startdate, enddate, 1);
-    var input = {subject:"sg", description:"debz&daboiz", location:"Royston", start: startdate, end: enddate, recurrence: "NONE"};
+    function generateics(s){
+      sop = readString(s)[0];
+      var startdate = toDate(sop.begin);
+      var enddate = toDate(sop.end);
+      defaultoffset(startdate, enddate, 1);
+      var input = {subject:result.subject, description:"", location:result.location, start: startdate, end: enddate, recurrence: result.recurrence};
+      var cal = ics();
+      cal.addEvent(input.subject, input.description, input.location, input.start.toLocaleString(), input.end.toLocaleString());    
 
-    var cal = ics();
-    cal.addEvent(input.subject, input.description, input.location, input.start.toLocaleString(), input.end.toLocaleString());    
+      var terminate = 5;
+      var i=0;
+      while(i<terminate && input.recurrence!="NONE"){
+        if(input.recurrence == "DAILY"){
+          input.start.setDate(input.start.getDate()+1);
+          input.end.setDate(input.end.getDate()+1);
+        } else if(input.recurrence == "WEEKLY"){
+          input.start.setDate(input.start.getDate()+7);
+          input.end.setDate(input.end.getDate()+7);
+        } else if(input.recurrence == "MONTHLY"){
+          input.start.setMonth(input.start.getMonth()+1);
+          input.end.setMonth(input.end.getMonth()+1);
+        } else if(input.recurrence == "YEARLY"){
+          input.start.setFullYear(input.start.getFullYear()+1);
+          input.end.setFullYear(input.end.getFullYear()+1);
+        } 
 
-    var terminate = 5;
-    var i=0;
-    while(i<terminate && input.recurrence!="NONE"){
-      if(input.recurrence == "DAILY"){
-        input.start.setDate(input.start.getDate()+1);
-        input.end.setDate(input.end.getDate()+1);
-      } else if(input.recurrence == "WEEKLY"){
-        input.start.setDate(input.start.getDate()+7);
-        input.end.setDate(input.end.getDate()+7);
-      } else if(input.recurrence == "MONTHLY"){
-        input.start.setMonth(input.start.getMonth()+1);
-        input.end.setMonth(input.end.getMonth()+1);
-      } else if(input.recurrence == "YEARLY"){
-        input.start.setFullYear(input.start.getFullYear()+1);
-        input.end.setFullYear(input.end.getFullYear()+1);
-      } 
-
-      cal.addEvent(input.subject, input.description, input.location, input.start.toString(), input.end.toString());    
-      i++;
+        cal.addEvent(input.subject, input.description, input.location, input.start.toString(), input.end.toString());    
+        i++;
+      }
     }
-
