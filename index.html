@@ -9,24 +9,24 @@
     </head>
     <body>
         <div id="window">
-            <pre id="content"></pre>
-            <h1>Type some events:</h1>
-            <hr>
-            <div id="test"></div>
-            <div id="events"></div>
-            <div autofocus id="mainInput" contenteditable="true" class="text"></div>
-            <div id="saveMenu">
-                    <button id="download"><i class="fas fa-file-download"></i> ICS</button>
-                    <button id="sendToGoogle"><i class="fas fa-share-square"></i> Google Calendar</button>
-                    <button id="signout_button" style="display: none;">Sign Out</button>
+            <div class="colFlex">
+                <h1>type some events:</h1>
+                <div id="events"></div>
+                <div autofocus id="mainInput" contenteditable="true" class="text" placeholder='"go to class 3pm every monday"'></div>
+                <div id="statusMenu">
+                    <span id="subjectIndictor" class="indicator valid"><i class="indicatorIcon far fa-check-circle"></i> title</span>
+                    <span id="locationIndicator" class="indicator invalid"><i class="indicatorIcon far fa-times-circle"></i> place</span>
+                    <span id="dayIndicator" class="indicator invalid"><i class="indicatorIcon far fa-times-circle"></i> day</span>
+                    <span id="timeIndicator" class="indicator invalid"><i class="indicatorIcon far fa-times-circle"></i> time</span>
+                    <span id="recurrenceIndicator" class="indicator invalid"><i class="indicatorIcon far fa-times-circle"></i> repeat</span>
+                </div>
+                <div id="saveMenu">
+                        <button id="download"><i class="fas fa-file-download"></i> ICS</button>
+                        <button id="sendToGoogle"><i class="fas fa-share-square"></i> Google Calendar</button>
+                        <button id="signout_button" style="display: none;">Sign Out</button>
+                </div>
+                <p><a href="https://github.com/maxsun/typedevents">made in 24 hours for cal-hacks 2018</a></p>
             </div>
-            <div id="statusMenu">
-                <span id="timeIndicator" class="indicator"><i class="indicatorIcon far fa-check-circle"></i> Time</span>
-                <span id="dayIndicator" class="indicator"><i class="indicatorIcon far fa-check-circle"></i> Day</span>
-                <span id="locationIndicator" class="indicator"><i class="indicatorIcon far fa-check-circle"></i> Location</span>
-                <span id="recurrenceIndicator" class="indicator"><i class="indicatorIcon far fa-check-circle"></i> Recurrence</span>
-            </div>
-            <p><a href="https://github.com/maxsun/typedevents">Made in 24 hours for CalHacks 2018</a></p>
         </div>
     </body>
     <script type="text/javascript">
