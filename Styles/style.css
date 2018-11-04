@@ -6,6 +6,7 @@ body, html {
   --gray: rgb(255, 252, 253);
   --darkgray: rgb(228, 228, 233);
   --red: #F15025;
+  --green: green;
   --darkblue: #4062BB;
 
   margin: 0;
@@ -14,11 +15,14 @@ body, html {
   font-size: 18px;
   background-color: var(--gray);
   color: var(--black);
+  display: flex;
+  justify-content: space-around;
 }
 
 h1 {
   font-weight: 600;
   font-size: 26px;
+  width: 100%;
 }
 
 hr {
@@ -38,16 +42,39 @@ a:hover {
   text-decoration: underline;
 }
 
+button {
+  padding: 7px;
+  border: solid 1px var(--darkgray);
+  font-size: 14px;
+  border-radius: 3px;
+  outline: none;
+  background-color: white;
+}
+
+button:hover {
+  cursor: pointer;
+  filter: brightness(99%);
+}
+
+button:active {
+  filter: brightness(97%);
+}
+
+i {
+  color: var(--lessblack);
+}
+
 .text {
-  width: 100%;
+  background-color: white;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
-  padding: 5px;
+  padding: 7px;
   border: solid 1px var(--darkgray);
   border-radius: 3px;
   outline: none;
   color: var(--black);
   overflow: hidden;
+  width: 100%;
 }
 
 .text:focus {
@@ -82,15 +109,46 @@ a:hover {
   color: var(--darkblue);
 }
 
+.indicator {
+  font-size: 14px;
+  margin-right: 10px;
+  color: var(--lessblack);
+}
+
+.indicatorIcon {
+  color: inherit;
+}
+
+.valid {
+  color: var(--green);
+}
+
+.invalid {
+  color: var(--red);
+}
+
 #window {
-  width: 500px;
+  flex: 1;
   min-width: 300px;
-  margin: auto;
+  max-width: 600px;
   margin-top: 100px;
   margin-bottom: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 30px;
 }
 
 #events {
   max-height: 300px;
   overflow: scroll;
+}
+
+#saveMenu {
+  margin-top: 20px;
+  width: 100%;
+}
+
+#statusMenu {
+  margin-top: 20px;
+  width: 100%;
 }

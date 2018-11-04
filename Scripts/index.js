@@ -179,13 +179,66 @@ input.onkeydown = function (e) {
   }
 };
 
+
+/* <i class="far fa-times-circle"></i> */
+// fa-check-circle
+
 input.oninput = function() {
-  // this.selection = new Selection(this);
-  // this.selection.saveCurrentSelection();
 
-  // let segments = [];
+  let checkCircle = "fa-check-circle";
+  let errorCircle = "fa-times-circle";
 
-  // let text = this.innerText;
+  let text = this.innerText;
+  let errors = readString(text)[1];
+  console.log(errors);
+
+  let ti = document.getElementById("timeIndicator");
+  ti.className = ti.className.replace(" valid", "");
+  ti.className = ti.className.replace(" invalid", "");
+
+  let di = document.getElementById("dayIndicator");
+  di.className = di.className.replace(" valid", "");
+  di.className = di.className.replace(" invalid", "");
+
+  let li = document.getElementById("locationIndicator");
+  li.className = li.className.replace(" valid", "");
+  li.className = li.className.replace(" invalid", "");
+
+  let ri = document.getElementById("recurrenceIndicator");
+  ri.className = ri.className.replace(" valid", "");
+  ri.className = ri.className.replace(" invalid", "");
+
+  if (errors.indexOf("time") == -1) {
+    ti.className += " valid";
+    ti.children[0].className = "indicatorIcon far " + checkCircle;
+  } else {
+    ti.className += " invalid";
+    ti.children[0].className = "indicatorIcon far " + errorCircle;
+  }
+
+  if (errors.indexOf("day") == -1) {
+    di.className += " valid";
+    di.children[0].className = "indicatorIcon far " + checkCircle;
+  } else {
+    di.className += " invalid";
+    di.children[0].className = "indicatorIcon far " + errorCircle;
+  }
+
+  if (errors.indexOf("location") == -1) {
+    li.className += " valid";
+    li.children[0].className = "indicatorIcon far " + checkCircle;
+  } else {
+    li.className += " invalid";
+    li.children[0].className = "indicatorIcon far " + errorCircle;
+  }
+
+  if (errors.indexOf("recurrence") == -1) {
+    ri.className += " valid";
+    ri.children[0].className = "indicatorIcon far " + checkCircle;
+  } else {
+    ri.className += " invalid";
+    ri.children[0].className = "indicatorIcon far " + errorCircle;
+  }
 
   // let highlights = fakeHighlights(text);
   // let startIndex = 0;

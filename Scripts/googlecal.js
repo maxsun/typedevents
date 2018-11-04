@@ -50,7 +50,7 @@ function initClient() {
 function updateSigninStatus(isSignedIn) {
   signedIn = isSignedIn;
   if (signedIn) {
-    signoutButton.style.display = "block";
+    signoutButton.style.display = "inline-block";
   } else {
     signoutButton.style.display = "none";
   }
