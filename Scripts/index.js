@@ -17,6 +17,7 @@ function updateEventsDisplay() {
       });
       updateEventsDisplay();
     }
+
     document.getElementById("events").appendChild(line);
   }
 }
@@ -106,15 +107,16 @@ document.getElementById("download").onclick = function() {
 
 document.getElementById("sendToGoogle").onclick = function(e) {
   console.log("Sending to google!");
-  sendToGoogle = function() {
+  if (!signedIn) {
+    authenticate(e, function() {
+      for (let i = 0; i < events.length; i++) {
+        createEvent(events[i].event);
+      }
+    });
+  } else {
     for (let i = 0; i < events.length; i++) {
       createEvent(events[i].event);
     }
-  }
-  if (!signedIn) {
-    authenticate(e, sendToGoogle);
-  } else {
-    sendToGoogle();
   }
 }
 

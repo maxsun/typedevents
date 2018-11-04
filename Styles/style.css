@@ -82,7 +82,7 @@ i {
   border-radius: 3px;
   outline: none;
   color: var(--black);
-  overflow: scroll;
+  overflow: hidden;
   width: 100%;
   max-height: 32px;
 }
@@ -135,21 +135,27 @@ i {
     flex-direction: column;
 }
 
+.line:hover {
+  color: var(--red);
+  text-decoration: line-through;
+}
+
 #window {
   margin-top: 100px;
   margin-bottom: 300px;
-  min-width: 350px;
+  min-width: 325px;
   max-width: 500px;
   display: flex;
   flex-wrap: wrap;
   padding: 30px;
-  /* flex-direction: column; */
   flex: 1;
 }
 
 #events {
   max-height: 300px;
   overflow: scroll;
+  overflow-x: hidden;
+
 }
 
 #saveMenu {
