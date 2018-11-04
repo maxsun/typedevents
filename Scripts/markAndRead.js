@@ -232,7 +232,6 @@ function finalClean(s){
 function readString(s){
   //non-recurrence needs subject, description, location, begin, end
   var result = {subject:"", location:"", begin:"", end:"", recurrence:"", starts:[]}
-  var markedWords = [];
   var errors = [];
   var dayOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday"];
 
@@ -240,28 +239,37 @@ function readString(s){
   var today = dayOfWeek[theDate.getDay()];
   var tomorrow = dayOfWeek[theDate.getDay() + 1];
   var aftertmr = dayOfWeek[theDate.getDay() + 2];
-  var toRemove = [];
 
   while (s.includes(" today")){
     s = s.replace("today", today);
-    toRemove.push(today);
-    markedWords.push("today");
   }
   while (s.includes(" the day after tomorrow")){
     s = s.replace("the day after tomorrow", aftertmr);
-    toRemove.push(aftertmr);
-    markedWords.push("the day after tomorrow");
   }
   while (s.includes(" tomorrow") || s.includes(" tmr ")){
     s = s.replace("tomorrow", tomorrow);
     s = s.replace("tmr", tomorrow);
-    toRemove.push(tomorrow);
-    if (s.includes(" tomorrow")){
-      markedWords.push("tomorrow");
-    }
-    else{
-      markedWords.push("tmr");
-    }
+  }
+  while (s.includes(" sundays")){
+    s = s.replace("sundays", "sunday weekly");
+  }
+  while (s.includes(" mondays")){
+    s = s.replace("mondays", "monday weekly");
+  }
+  while (s.includes(" tuesdays")){
+    s = s.replace("tuesdays", "tuesday weekly");
+  }
+  while (s.includes(" wednesdays")){
+    s = s.replace("wednesdays", "wednesday weekly");
+  }
+  while (s.includes(" thursdays")){
+    s = s.replace("thursdays", "thursday weekly");
+  }
+  while (s.includes(" fridays")){
+    s = s.replace("fridays", "friday weekly");
+  }
+  while (s.includes(" saturdays")){
+    s = s.replace("saturdays", "saturday weekly");
   }
 
   s = s.toLowerCase();
@@ -278,13 +286,11 @@ function readString(s){
   }
   result.recurrence = recurrence[0];
   s = recurrence[1];
-  markedWords = markedWords.concat(recurrence[2]);
    try{
     days = findDays(s);
     result.begin += days[0];
     result.end += days[1];
     s = days[2];
-    markedWords = markedWords.concat(days[3]);
   }
   catch(err){
     result.begin = ""
@@ -304,7 +310,6 @@ function readString(s){
     result.begin = times[0] + " " + result.begin;
     result.end = times[1] + " " + result.end;
     s = times[2];
-    markedWords = markedWords.concat(times[3]);
   }
   catch(err){
 //     console.log("TIMES ERROR");
@@ -326,19 +331,12 @@ function readString(s){
   }
   result.subject = finalClean(s);
 
-  markedWords = markedWords.concat(result.location.split(" "));
-  markedWords = markedWords.concat(result.subject.split(" "));
 //   console.log("Subject  : " + result.subject,
 //               "Location : " + result.location,
 //               "Start    : " + result.begin,
 //               "End      : " + result.end,
 //               "Repeat   : " + result.recurrence);
 //  console.log("Errors   : " + errors);
-
-  while (toRemove.length > 0) {
-    var remove = toRemove.pop();
-    markedWords = markedWords.splice(markedWords.indexOf(remove), 1);
-  }
 
   return [result, errors];
 }
