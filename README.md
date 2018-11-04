@@ -10,29 +10,23 @@ Go to http://typed.events to use the *TypedEvents* web application. Enter events
 
 Once you finish entering your events, you can either download it as an ICS file on your local calendar or sign into Google to add them into your Google calendar.
 
-*Default Inputs*
+**Default Inputs**
 
-Date : Today
+Date: Today
 
-Time Duration : 0 min
+Time Duration: 0 min
 
-Place : none
+Place: none
 
-Title : none
+Title: none
 
-Repeat : none
+Repeat: none
 
-*Features*
+**Features:**
+ Google Calendar and Native Calendar App Integration, Intuitive Date Interpolation, Date Rolling, Instant Input Feedback, Shortcuts
 
-Google Calendar and Native Calendar App Integration
+**Supported Shortcuts**
 
-Intuitive Date Interpolation
-
-Date Rolling Forwards
-
-Instant Input Feedback
-
-*Supported Shortcuts*
 Today, Tomorrow
 
 Noon, Midnight
