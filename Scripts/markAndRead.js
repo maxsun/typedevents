@@ -293,7 +293,7 @@ function readString(s){
 //               "Repeat   : " + result.recurrence);
   markedWords = markedWords.concat(result.location.split(" "));
   markedWords = markedWords.concat(result.subject.split(" "));
-  console.log("Marked   : " + markedWords);
+//  console.log("Marked   : " + markedWords);
 
   while (toRemove.length > 0) {
     var remove = toRemove.pop();
