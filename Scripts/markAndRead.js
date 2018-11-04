@@ -173,6 +173,7 @@ function findDays(s){
   while(days.length > 0){
     s = s.replace(days.pop(), "");
   }
+
   return [firstDate, lastDate, s, toMark]
 }
 function findLocation(s){
@@ -267,12 +268,17 @@ function readString(s){
   s = days[2];
   markedWords = markedWords.concat(days[3]);
 
-
   times = findTimes(s);
-  result.begin = times[0] + " " + result.begin;
-  result.end = times[1] + " " + result.end;
-  s = times[2];
-  markedWords = markedWords.concat(times[3]);
+  try{
+    result.begin = times[0] + " " + result.begin;
+    result.end = times[1] + " " + result.end;
+    s = times[2];
+    markedWords = markedWords.concat(times[3]);
+  }
+  catch(err){
+    result.begin = "";
+    result.end = "";
+  }
   //s = cleanString(s);
 
   var location = findLocation(s);
@@ -280,11 +286,11 @@ function readString(s){
   s = location[1];
   result.subject = finalClean(s)
 
-  console.log("Subject  : " + result.subject,
-              "Location : " + result.location,
-              "Start    : " + result.begin,
-              "End      : " + result.end,
-              "Repeat   : " + result.recurrence);
+//   console.log("Subject  : " + result.subject,
+//               "Location : " + result.location,
+//               "Start    : " + result.begin,
+//               "End      : " + result.end,
+//               "Repeat   : " + result.recurrence);
   markedWords = markedWords.concat(result.location.split(" "));
   markedWords = markedWords.concat(result.subject.split(" "));
   console.log("Marked   : " + markedWords);
@@ -316,8 +322,8 @@ RANDOM TESTS
 */
 
 function test(){
-  var a = "play frisbee at memorial glade today from 4-5:30pm";
+  var a = "play frisbee at memorial glade today from 4";
   a = a.toLowerCase();
-  console.log("Input    : " + a);
+  //console.log("Input    : " + a);
   readString(a);
 }
