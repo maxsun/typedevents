@@ -11,6 +11,7 @@ Go to http://typed.events to use the *TypedEvents* web application. Enter events
 Once you finish entering your events, you can either download it as an ICS file on your local calendar or sign into Google to add them into your Google calendar.
 
 **Stack**
+
 This application uses an HTML and CSS frontend and utilizes JavaScript to create ICS files and access the Google Calendar REST API. 
 
 *Created by Cab for Cal Hacks 2018*
