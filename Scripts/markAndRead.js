@@ -1,9 +1,10 @@
 function findRecurrence(s){
   var mark = s.match(/(daily|every day|weekly|every week|monthly|every month|yearly|every year)/g);
 
-  if (s.includes("daily") || s.includes("every day")){
+  if (s.includes("daily") || s.includes("every day") || s.includes("everyday")){
     s = s.replace("daily", "");
     s = s.replace("every day", "");
+    s = s.replace("everyday", "");
     return ["daily", s, mark]
   }
   if (s.includes("weekly") || s.includes("every week")){
