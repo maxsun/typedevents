@@ -318,14 +318,13 @@ function readString(s){
   var location = findLocation(s);
   result.location = finalClean(location[0]);
   s = location[1];
-  result.subject = finalClean(s)
   }
   catch(err){
 //     console.log("LOCATION ERROR");
     errors.push("location");
     result.location = "";
-    result.subject = "";
   }
+  result.subject = finalClean(s);
 
   markedWords = markedWords.concat(result.location.split(" "));
   markedWords = markedWords.concat(result.subject.split(" "));
@@ -363,7 +362,7 @@ RANDOM TESTS
 */
 
 function test(){
-  var a = "go to the park from 7 to 8pm";
+  var a = "dwinelle on thursday 5pm to 6pm";
   a = a.toLowerCase();
   //console.log("Input    : " + a);
   readString(a);
