@@ -74,7 +74,7 @@ function findTimes(s, date1, date2){
   }
   if (lastTime.startsWith("12")){
     if (end == "am"){
-      start = "pm";
+      end = "pm";
     }
     else{
       end = "am";
@@ -102,7 +102,7 @@ function findTimes(s, date1, date2){
   }
   if (lastTime.startsWith("12")){
     if (end == "am"){
-      start = "pm";
+      end = "pm";
     }
     else{
       end = "am";
