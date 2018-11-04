@@ -138,9 +138,16 @@ function fakeHighlights(str) {
 input.addEventListener("keyup", function(event) {
   if(event.key == "Enter" && this.innerText.trim() != "") {
     event.preventDefault();
-    addToEventsDisplay(this.innerText.split(" "));
-    document.getElementById("events").scrollTo(0, document.getElementById("events").scrollHeight);
-    this.innerText = "";
+
+    try {
+      let ev = readString(this.innerText);
+      console.log(ev);
+      addToEventsDisplay(this.innerText.split(" "));
+      document.getElementById("events").scrollTo(0, document.getElementById("events").scrollHeight);
+      this.innerText = "";
+    } catch (err) {
+      console.log("Not Ready Yet!");
+    }
   }
 });
 
@@ -150,9 +157,15 @@ document.getElementById("download").onclick = function() {
   cal.download();
 }
 
-document.getElementById("sendToGoogle").onclick = function() {
-  createEvent(readString(input.innerText)[0]);
+document.getElementById("sendToGoogle").onclick = function(e) {
   console.log("Sending to google!");
+  if (!signedIn) {
+    authenticate(e, function() {
+      createEvent(readString(input.innerText)[0]);
+    });
+  } else {
+    createEvent(readString(input.innerText)[0]);
+  }
 }
 
 input.onkeydown = function (e) {
@@ -172,13 +185,7 @@ input.oninput = function() {
 
   // let segments = [];
 
-  let text = this.innerText;
-  try {
-    let ev = readString(text);
-    console.log(ev);
-  } catch (err) {
-    console.log(err);
-  }
+  // let text = this.innerText;
 
   // let highlights = fakeHighlights(text);
   // let startIndex = 0;

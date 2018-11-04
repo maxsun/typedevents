@@ -12,11 +12,8 @@ var SCOPES = "https://www.googleapis.com/auth/calendar";
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
 var eventButton = document.getElementById('create_event');
-var eventLocation = "";
-var eventName = "";
-var eventRecurrence = "";
-var eventStart = "";
-var eventEnd = "";
+
+var signedIn = false;
 
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -41,8 +38,8 @@ function initClient() {
 
     // Handle the initial sign-in state.
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    authorizeButton.onclick = handleAuthClick;
-    signoutButton.onclick = handleSignoutClick;
+    // authorizeButton.onclick = handleAuthClick;
+    signoutButton.onclick = signOut;
   });
 }
 
@@ -51,28 +48,27 @@ function initClient() {
  *  appropriately. After a sign-in, the API is called.
  */
 function updateSigninStatus(isSignedIn) {
-  if (isSignedIn) {
-    authorizeButton.style.display = 'none';
-    signoutButton.style.display = 'block';
-    //listUpcomingEvents();
+  signedIn = isSignedIn;
+  if (signedIn) {
+    signoutButton.style.display = "block";
   } else {
-    authorizeButton.style.display = 'block';
-    signoutButton.style.display = 'none';
+    signoutButton.style.display = "none";
   }
 }
 
 /**
  *  Sign in the user upon button click.
  */
-function handleAuthClick(event) {
-  gapi.auth2.getAuthInstance().signIn();
+function authenticate(event, cb) {
+  gapi.auth2.getAuthInstance().signIn().then(cb);
 }
 
 /**
  *  Sign out the user upon button click.
  */
-function handleSignoutClick(event) {
+function signOut(event) {
   gapi.auth2.getAuthInstance().signOut();
+  // updateSigninStatus(false);
 }
 
 /**
