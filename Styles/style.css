@@ -78,12 +78,13 @@ i {
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   padding: 7px;
+  padding-right: 0px;
   border: solid 1px var(--darkgray);
   border-radius: 3px;
   outline: none;
   color: var(--black);
   overflow: hidden;
-  width: 100%;
+  width: calc(100% - 7px);
   max-height: 32px;
 }
 

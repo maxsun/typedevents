@@ -4,6 +4,13 @@ let input = document.getElementById("mainInput");
 
 var events = [];
 
+function openInNewTab(url) {
+  var a = document.createElement("a");
+  a.target = "_blank";
+  a.href = url;
+  a.click();
+}
+
 function updateEventsDisplay() {
   document.getElementById("events").innerHTML = "";
   for (let i = 0; i < events.length; i++) {
@@ -109,11 +116,9 @@ function generateSuccessMessage() {
       msg.style.display = "none";
     });
   },false);
-  msg.style.display = "block";
-  msg.classList.add("animated");
-  msg.classList.add("fadeIn");
+  msg.className = "animated fadeIn valid";
+  msg.style.display = "inline-block";
   msg.innerText = "Success!";
-  msg.className = " valid";
 }
 
 function generateFailMessage() {
@@ -127,11 +132,9 @@ function generateFailMessage() {
       msg.style.display = "none";
     });
   },false);
-  msg.style.display = "block";
-  msg.classList.add("animated");
-  msg.classList.add("fadeIn");
+  msg.className = "animated fadeIn invalid";
+  msg.style.display = "inline-block";
   msg.innerText = "Failed!";
-  msg.className = " invalid";
 }
 
 document.getElementById("download").onclick = function() {
@@ -171,6 +174,8 @@ document.getElementById("sendToGoogle").onclick = function(e) {
       }
     }
   }
+  openInNewTab("https://calendar.google.com/calendar/r");
+
 }
 
 input.onkeydown = function (e) {
