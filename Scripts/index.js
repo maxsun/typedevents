@@ -98,6 +98,42 @@ input.addEventListener("keyup", function(event) {
   }
 });
 
+function generateSuccessMessage() {
+  let msg = document.getElementById("statusMessage");
+  msg.addEventListener("animationend", function() {
+    console.log("done");
+    msg.className = msg.className.replace("fadeIn", "");
+    msg.classList.add("fadeOut");
+    msg.addEventListener("animationend", function() {
+      msg.className = "";
+      msg.style.display = "none";
+    });
+  },false);
+  msg.style.display = "block";
+  msg.classList.add("animated");
+  msg.classList.add("fadeIn");
+  msg.innerText = "Success!";
+  msg.className = " valid";
+}
+
+function generateFailMessage() {
+  let msg = document.getElementById("statusMessage");
+  msg.addEventListener("animationend", function() {
+    console.log("done");
+    msg.className = msg.className.replace("fadeIn", "");
+    msg.classList.add("fadeOut");
+    msg.addEventListener("animationend", function() {
+      msg.className = "";
+      msg.style.display = "none";
+    });
+  },false);
+  msg.style.display = "block";
+  msg.classList.add("animated");
+  msg.classList.add("fadeIn");
+  msg.innerText = "Failed!";
+  msg.className = " invalid";
+}
+
 document.getElementById("download").onclick = function() {
   console.log("Downloading ics!");
   let cal = ics();
@@ -107,6 +143,14 @@ document.getElementById("download").onclick = function() {
       cal = generateics(events[i].events[j][0], cal);
     }
   }
+  
+
+  if (events.length != 0) {
+    generateSuccessMessage();
+  } else {
+    generateFailMessage();
+  }
+
   cal.download();
 }
 
@@ -116,14 +160,14 @@ document.getElementById("sendToGoogle").onclick = function(e) {
     authenticate(e, function() {
       for (let i = 0; i < events.length; i++) {
         for (let j = 0; j < events[i].events.length; j++) {
-          createEvent(events[i].events[j][0]);
+          createEvent(events[i].events[j][0], generateSuccessMessage);
         }
       }
     });
   } else {
     for (let i = 0; i < events.length; i++) {
       for (let j = 0; j < events[i].events.length; j++) {
-        createEvent(events[i].events[j][0]);
+        createEvent(events[i].events[j][0], generateSuccessMessage);
       }
     }
   }

@@ -75,7 +75,7 @@ function signOut(event) {
 /**
  * Creates an event in the user's Google calendar
  */
-function createEvent(eventObject) {
+function createEvent(eventObject, callback) {
   // readString(event_name.value);
   console.log(eventObject.begin);
 
@@ -110,6 +110,7 @@ function createEvent(eventObject) {
 
   request.execute(function(event) {
     console.log("Success to Google Cal");
+    callback();
   });
 }
 
