@@ -33,13 +33,13 @@
       }
     }
 
-    function generateics(s){
-      sop = readString(s)[0];
+    //sop: the event object created by 'markAndRead.js'
+    function generateics(sop){
       var startdate = toDate(sop.begin);
       var enddate = toDate(sop.end);
       defaultoffset(startdate, enddate);
       checkbehind(startdate, enddate);
-      var input = {subject:result.subject, description:"", location:result.location, start: startdate, end: enddate, recurrence: result.recurrence};
+      var input = {subject:sop.subject, description:"", location:sop.location, start: startdate, end: enddate, recurrence: sop.recurrence};
       var cal = ics();
       cal.addEvent(input.subject, input.description, input.location, input.start.toLocaleString(), input.end.toLocaleString());    
 
@@ -63,4 +63,5 @@
         cal.addEvent(input.subject, input.description, input.location, input.start.toString(), input.end.toString());    
         i++;
       }
+      return cal;
     }
