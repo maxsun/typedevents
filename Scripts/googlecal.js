@@ -419,7 +419,7 @@ function createEvent(eventObject) {
 
 function toDate(string){
   var spot = string.indexOf(":");
-  var hour = parseInt(string.substring(0,spot));
+  var hour = parseInt(string.substring(0,spot))%12;
   var minute = parseInt(string.substring(spot+1, spot+3));
   var init = string.substring(spot+6, string.length);
   var ampm;
