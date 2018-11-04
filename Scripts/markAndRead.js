@@ -295,6 +295,8 @@ function readString(s){
     }
 //     console.log("DAYS ERROR");
     errors.push("day");
+    result.begin = new Date();
+    result.end = new Date();
   }
 
   try{
@@ -327,12 +329,12 @@ function readString(s){
 
   markedWords = markedWords.concat(result.location.split(" "));
   markedWords = markedWords.concat(result.subject.split(" "));
-  // console.log("Subject  : " + result.subject,
-  //             "Location : " + result.location,
-  //             "Start    : " + result.begin,
-  //             "End      : " + result.end,
-  //             "Repeat   : " + result.recurrence);
-  // console.log("Errors   : " + errors);
+//   console.log("Subject  : " + result.subject,
+//               "Location : " + result.location,
+//               "Start    : " + result.begin,
+//               "End      : " + result.end,
+//               "Repeat   : " + result.recurrence);
+//  console.log("Errors   : " + errors);
 
   while (toRemove.length > 0) {
     var remove = toRemove.pop();
@@ -361,7 +363,7 @@ RANDOM TESTS
 */
 
 function test(){
-  var a = "do something at somewhere next wednesday from 11 to friday 1am weekly";
+  var a = "go to the park from 7 to 8pm";
   a = a.toLowerCase();
   //console.log("Input    : " + a);
   readString(a);
