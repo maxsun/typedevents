@@ -34,13 +34,12 @@
     }
 
     //sop: the event object created by 'markAndRead.js'
-    function generateics(sop){
+    function generateics(sop, cal){
       var startdate = toDate(sop.begin);
       var enddate = toDate(sop.end);
       defaultoffset(startdate, enddate);
       checkbehind(startdate, enddate);
       var input = {subject:sop.subject, description:"", location:sop.location, start: startdate, end: enddate, recurrence: sop.recurrence};
-      var cal = ics();
       cal.addEvent(input.subject, input.description, input.location, input.start.toLocaleString(), input.end.toLocaleString());    
 
       var terminate = 52;

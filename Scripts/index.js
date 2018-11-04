@@ -27,8 +27,7 @@ function updateIndicators() {
   let errorCircle = "fa-times-circle";
 
   let text = input.innerText;
-  let errors = readString(text)[1];
-  console.log(errors);
+  let errors = readCompoundString(text)[0][1];
 
   let ti = document.getElementById("timeIndicator");
   ti.className = ti.className.replace(" valid", "");
@@ -83,12 +82,13 @@ input.addEventListener("keyup", function(event) {
   if(event.key == "Enter" && this.innerText.trim() != "") {
     event.preventDefault();
 
-    let ev = readString(this.innerText);
-    let errors = ev[1];
+    let evs = readCompoundString(this.innerText);
+
+    let errors = evs[0][1];
     if (errors.indexOf("time") == -1) {
       events.push({
         "text": this.innerText,
-        "event": ev
+        "events": evs
       });
       updateEventsDisplay();
       document.getElementById("events").scrollTo(0, document.getElementById("events").scrollHeight);
@@ -100,8 +100,13 @@ input.addEventListener("keyup", function(event) {
 
 document.getElementById("download").onclick = function() {
   console.log("Downloading ics!");
-  console.log(events);
-  // let cal = generateics(readString(input.innerText)[0]);
+  let cal = ics();
+
+  for (let i = 0; i < events.length; i++) {
+    for (let j = 0; j < events[i].events.length; j++) {
+      cal = generateics(events[i].events[j][0], cal);
+    }
+  }
   cal.download();
 }
 
@@ -110,12 +115,16 @@ document.getElementById("sendToGoogle").onclick = function(e) {
   if (!signedIn) {
     authenticate(e, function() {
       for (let i = 0; i < events.length; i++) {
-        createEvent(events[i].event);
+        for (let j = 0; j < events[i].events.length; j++) {
+          createEvent(events[i].events[j][0]);
+        }
       }
     });
   } else {
     for (let i = 0; i < events.length; i++) {
-      createEvent(events[i].event);
+      for (let j = 0; j < events[i].events.length; j++) {
+        createEvent(events[i].events[j][0]);
+      }
     }
   }
 }
