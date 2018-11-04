@@ -85,23 +85,26 @@ function updateIndicators() {
   }
 }
 
-input.addEventListener("keyup", function(event) {
-  if(event.key == "Enter" && this.innerText.trim() != "") {
-    event.preventDefault();
-
-    let evs = readCompoundString(this.innerText);
+function addInput() {
+  let evs = readCompoundString(input.innerText);
 
     let errors = evs[0][1];
     if (errors.indexOf("time") == -1) {
       events.push({
-        "text": this.innerText,
+        "text": input.innerText,
         "events": evs
       });
       updateEventsDisplay();
       document.getElementById("events").scrollTo(0, document.getElementById("events").scrollHeight);
-      this.innerText = "";
+      input.innerText = "";
       updateIndicators();
     }
+}
+
+input.addEventListener("keyup", function(event) {
+  if(event.key == "Enter" && this.innerText.trim() != "") {
+    event.preventDefault();
+    addInput();
   }
 });
 
@@ -138,6 +141,7 @@ function generateFailMessage() {
 }
 
 document.getElementById("download").onclick = function() {
+  addInput();
   console.log("Downloading ics!");
   let cal = ics();
 
@@ -159,18 +163,19 @@ document.getElementById("download").onclick = function() {
 
 document.getElementById("sendToGoogle").onclick = function(e) {
   console.log("Sending to google!");
+  addInput();
   if (!signedIn) {
     authenticate(e, function() {
       for (let i = 0; i < events.length; i++) {
         for (let j = 0; j < events[i].events.length; j++) {
-          createEvent(events[i].events[j][0], generateSuccessMessage);
+          createEvent(events[i].events[j][0], events[i].text, generateSuccessMessage);
         }
       }
     });
   } else {
     for (let i = 0; i < events.length; i++) {
       for (let j = 0; j < events[i].events.length; j++) {
-        createEvent(events[i].events[j][0], generateSuccessMessage);
+        createEvent(events[i].events[j][0], events[i].text, generateSuccessMessage);
       }
     }
   }

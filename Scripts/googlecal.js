@@ -75,7 +75,7 @@ function signOut(event) {
 /**
  * Creates an event in the user's Google calendar
  */
-function createEvent(eventObject, callback) {
+function createEvent(eventObject, description, callback) {
   // readString(event_name.value);
   console.log(eventObject.begin);
 
@@ -89,7 +89,7 @@ function createEvent(eventObject, callback) {
   let event = {
     'summary': eventObject.subject,
     'location': eventObject.location,
-    'description': 'Auto-created event by TypedEvents: \"' + eventObject.subject + '\"',
+    'description': 'Auto-created event by TypedEvents: \"' + description + '\"',
     'start': {
       'dateTime': startTime.toISOString(),
       'timeZone': 'America/Los_Angeles'
