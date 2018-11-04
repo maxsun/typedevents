@@ -331,6 +331,7 @@ function readString(s){
     result.location = "";
   }
   result.subject = finalClean(s);
+  result.subject = result.subject.charAt(0).toUpperCase() + result.subject.slice(1);
 
 //   console.log("Subject  : " + result.subject,
 //               "Location : " + result.location,
