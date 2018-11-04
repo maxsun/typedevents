@@ -33,35 +33,6 @@
       }
     }
 
-    function custom(s){
-      words = s.split(" ");
-      var i;
-      var output = [];
-      for(i = 0; i<words.length; i++){
-        if(words[i].match(/^[mwfth]+$/g)){
-          temp = words[i].replace("th", "h");
-          var j;
-          for(int j = 0; j<temp.length; j++){
-            var c;
-            if(temp.charAt(j) == 'm'){
-              c = readString(s.replace(words[i], "Monday"));
-            } else if(temp.charAt(j) == 't'){
-              c = readString(s.replace(words[i], "Tuesday"));
-            } else if(temp.charAt(j) == 'w'){
-              c = readString(s.replace(words[i], "Wednesday"));
-            } else if(temp.charAt(j) == 'h'){
-              c = readString(s.replace(words[i], "Thursday"));
-            } else if(temp.charAt(j) == 'f'){
-              c = readString(s.replace(words[i], "Friday"));
-            }
-            output = output.concat(c);
-          }
-          return output;
-        }
-      }
-      return readString(s);
-    }
-
     //sop: the event object created by 'markAndRead.js'
     function generateics(sop){
       var startdate = toDate(sop.begin);

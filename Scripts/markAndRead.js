@@ -341,6 +341,35 @@ function readString(s){
   return [result, errors];
 }
 
+function readCompoundString(s){
+      var words = s.split(" ");
+      var i;
+      var output = [];
+      for(i = 0; i<words.length; i++){
+        if(words[i].match(/^[mwfth]+$/g)){
+          temp = words[i].replace("th", "h");
+          var j;
+          for(j = 0; j<temp.length; j++){
+            var c;
+            if(temp.charAt(j) == 'm'){
+              c = readString(s.replace(words[i], "Monday"));
+            } else if(temp.charAt(j) == 't'){
+              c = readString(s.replace(words[i], "Tuesday"));
+            } else if(temp.charAt(j) == 'w'){
+              c = readString(s.replace(words[i], "Wednesday"));
+            } else if(temp.charAt(j) == 'h'){
+              c = readString(s.replace(words[i], "Thursday"));
+            } else if(temp.charAt(j) == 'f'){
+              c = readString(s.replace(words[i], "Friday"));
+            }
+            output.push(c);
+          }
+          return output;
+        }
+      }
+      return [readString(s)];
+    }
+
 /*
 GREY BOX
 play frisbee at memorial glade today from 4-5:30pm
@@ -363,5 +392,5 @@ function test(){
   var a = "dwinelle on thursday 5pm to 6pm";
   a = a.toLowerCase();
   //console.log("Input    : " + a);
-  readString(a);
+  readCompoundString(a);
 }
